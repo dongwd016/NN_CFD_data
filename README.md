@@ -19,7 +19,9 @@ When using the neural network, you need to scale the input data with the provide
 - linear_layers.2.bias:   1024 * 1
 - linear_layers.3.weight: 11 * 1024
 - linear_layers.3.bias:   11 * 1
+
 <br/>
+
 - mean_input: 12 * 1
 - std_input:  12 * 1
 - mean_output: 11 * 1
@@ -27,6 +29,7 @@ When using the neural network, you need to scale the input data with the provide
 
 ## pth file structure after loading
 
+```
 DNN(
   (linear_layers): ModuleList(
     (0): Linear(in_features=12, out_features=1024, bias=True)
@@ -37,3 +40,4 @@ DNN(
   (dropout): Dropout(p=0.0, inplace=False)
   (activation_function): ReLU()
 )
+```
