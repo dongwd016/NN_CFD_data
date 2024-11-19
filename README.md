@@ -2,7 +2,7 @@
 
 This repository contains the data used for the neural network reduced model for CFD simulation project.
 
-The neural network takes current state (temperature, pressure, species mass fraction) and a desired time step within 10<sup>-10</sup> s to 10 <sup>-8</sup> s as input and predicts the next state of the system (temperature, pressure, species mass fraction) within the next time step. The neural network architecture is a fully connected DNN with size: 12 * 1024 * 10 * 1024 * 11. Weight and bias matrices are stored in both *.txt and *.pth format. For the usage of *.pth state_dict file, please refer to the python code in "nn_models.py" file.
+The neural network takes current state (temperature, pressure, species mass fraction) and a desired time step within 10<sup>-10</sup> s to 10 <sup>-8</sup> s as input and predicts the next state of the system (temperature, pressure, species mass fraction) within the next time step. The neural network architecture is a fully connected DNN with size: 12 * 1024 * 10 * 1024 * 11. The activation function is ReLU (max(x,0)). It is applied to all layers except for the output. Weight and bias matrices are stored in both *.txt and *.pth format. For the usage of *.pth state_dict file, please refer to the python code in "nn_models.py" file.
 
 When using the neural network, you need to scale the input data with the provided mean and std files for input before feeding it to the neural network. The nerual network output also needs to be scaled back to the real physical values using the provided mean and std files for output.
 
