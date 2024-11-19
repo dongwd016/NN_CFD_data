@@ -2,12 +2,34 @@
 
 This repository contains the data used for the neural network reduced model for CFD simulation project.
 
-The neural network takes current state (temperature, pressure, species mass fraction) and a desired time step within 10<sup>-10</sup> s to 10 <sup>-8</sup> s as input and predicts the next state of the system (temperature, pressure, species mass fraction) within the next time step. The neural network architecture is a fully connected DNN with size: 12 * 1024 * 10 * 1024 * 11. Weight and bias matrix stored in both *.txt and *.pth format. For the usage of *.pth state_dict file, please refer to the python code in "nn_models.py" file.
+The neural network takes current state (temperature, pressure, species mass fraction) and a desired time step within 10<sup>-10</sup> s to 10 <sup>-8</sup> s as input and predicts the next state of the system (temperature, pressure, species mass fraction) within the next time step. The neural network architecture is a fully connected DNN with size: 12 * 1024 * 10 * 1024 * 11. Weight and bias matrices are stored in both *.txt and *.pth format. For the usage of *.pth state_dict file, please refer to the python code in "nn_models.py" file.
 
 When using the neural network, you need to scale the input data with the provided mean and std files for input before feeding it to the neural network. The nerual network output also needs to be scaled back to the real physical values using the provided mean and std files for output.
 
 - NN input = (T(t),P(t),Y(t),log10(dt) - mean_input) / std_input
 - T(t+dt),P(t+dt),Y(t+dt) = NN_output * std_output + mean_output
+
+## h5 file
+
+There is an h5 file ("model_state_dict.h5") containing both the state_dict of the neural network and the scaling information of the input and output of the neural network. It's structure is as follows:
+
+- linear_layers
+  - 0
+    - weight
+    - bias
+  - 1
+    - weight
+    - bias
+  - 2
+    - weight
+    - bias
+  - 3
+    - weight
+    - bias
+- mean_input
+- std_input
+- mean_output
+- std_output
 
 ## txt files shape
 
