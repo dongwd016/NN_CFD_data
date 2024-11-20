@@ -107,7 +107,7 @@ int main() {
         output_real[i] = output_nn[i] * std_output[i] + mean_output[i]; // denormalize output
     }
     for (int i = 0; i < 11; i++) {
-        output_real[i] = output_real[i] + input_real[i];
+        output_real[i] = output_real[i] + input_real[i]; // NN outputs change of state properties, transferred it to real values
     }
     std::array<Scalar, 11> output;
     for (int i = 0; i < 11; i++) {
