@@ -11,25 +11,7 @@ When using the neural network, you need to scale the input data with the provide
 
 ## h5 file
 
-There is an h5 file ("model_state_dict.h5") containing both the state_dict of the neural network and the scaling information of the input and output of the neural network. It's structure is as follows:
-
-- linear_layers
-  - 0
-    - weight
-    - bias
-  - 1
-    - weight
-    - bias
-  - 2
-    - weight
-    - bias
-  - 3
-    - weight
-    - bias
-- mean_input
-- std_input
-- mean_output
-- std_output
+There is an h5 file ("keras_model.h5") which saves the keras model of the neural network. But the input thermo-state and time step still need to be scaled before feeding it to the neural network. The output of the neural network also need to be scaled back to the real physical values according to the above formula.
 
 ## txt files shape
 
