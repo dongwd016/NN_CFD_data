@@ -56,8 +56,19 @@ auto keras_model(const std::array<Scalar, 12>& initial_input) {
 
     std::array<Scalar, 12> input_mins = {2.672759399e+03, 6.094697246e+00, -4.844101359e+00, -2.567899734e+00, -4.017229332e+00, -1.036033059e+00, -3.623349803e+00, -2.724017375e+00, -5.866017618e+00, -6.939431887e+00, -8.122801971e+00, -9.000983929e+00};
 
+    // Boxcox transformation of mass fraction
+    std::array<Scalar, 12> input_real;
+    for (int i = 0; i < 12; i++) {
+        if (i>=2 && i<11) {
+            input_real[i] = (pow(initial_input[i], 0.1) - 1) / 0.1; // Boxcox lambda = 0.1
+        } else {
+            input_real[i] = initial_input[i];
+        }
+    }
+    // Boxcox transformation of mass fraction
+
     std::array<Scalar, 12> model_input;
-    for (int i = 0; i < 12; i++) { model_input[i] = (initial_input[i] - input_mins[i]) / (input_norms[i]); }
+    for (int i = 0; i < 12; i++) { model_input[i] = (input_real[i] - input_mins[i]) / (input_norms[i]); }
 
     if (model_input.size() != 12) { throw std::invalid_argument("Invalid input size. Expected size: 12"); } 
 
@@ -100,5 +111,23 @@ auto keras_model(const std::array<Scalar, 12>& initial_input) {
     std::array<Scalar, 11> model_output;
     for (int i = 0; i < 11; i++) { model_output[i] = (layer_4_output.data()[i] * output_norms[i]) + output_mins[i]; } 
 
-    return model_output;
+    // transfer delta properties to real values
+    std::array<Scalar, 11> output_real;
+    for (int i = 0; i < 11; i++) {
+        output_real[i] = model_output[i] + input_real[i]; // NN outputs change of state properties, transferred it to real values
+    }
+    // transfer delta properties to real values
+
+    // Inverse Boxcox transformation of mass fractions
+    std::array<Scalar, 11> output;
+    for (int i = 0; i < 11; i++) {
+        if (i>=2 && i<11) {
+            output[i] = pow(output_real[i] * 0.1 + 1, 10.0); // Inverse Boxcox transformation
+        } else {
+            output[i] = output_real[i];
+        }
+    }
+    // Inverse Boxcox transformation of mass fractions
+
+    return output;
 }
