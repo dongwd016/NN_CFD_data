@@ -1,0 +1,11 @@
+# Common ignore
+._*
+.DS_Store
+.DS_Store?
+.idea
+.Trashes
+.vscode
+node_modules
+Thumbs.db
+
+# Project specific ignore
